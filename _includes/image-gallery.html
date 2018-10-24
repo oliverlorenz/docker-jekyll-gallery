@@ -1,0 +1,24 @@
+<script type="text/javascript" src="/js/jquery-11.0.min.js"></script>
+<script type="text/javascript" src="/js/unitegallery.min.js"></script>
+<link rel="stylesheet" href="/css/unite-gallery.css" type="text/css" />
+<script type="text/javascript" src="/js/ug-theme-tiles.js"></script>
+<div id="gallery" style="display:none;">
+{% for file in site.static_files %}
+{% if file.path contains include.folder %}
+{% if file.extname == '.jpg' or file.extname == '.jpeg' or file.extname == '.JPG' or file.extname == '.JPEG' %}
+{% assign filenameparts = file.path | split: "/" %}
+{% assign filename = filenameparts | last | replace: file.extname,"" %}
+<a>
+    <img alt="{{ filename }}" src="{{ file.path | replace: '/img/','/img/thumbnails/' }}" data-image="{{ file.path }}" style="display:none" />
+</a>
+{% endif %}
+{% endif %}
+{% endfor %}
+</div>
+<script type="text/javascript"> 	
+	jQuery(document).ready(() => { 
+		setTimeout(() => {
+			jQuery("#gallery").unitegallery(); 
+		}, 500);
+	}); 
+</script>
